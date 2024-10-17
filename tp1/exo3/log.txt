@@ -1,0 +1,26 @@
+Log for directory: /
+proc – dr-xr-xr-x root : root – 0 – 161024 @ 23h11
+initrd.img.old – -rw-r--r-- root : root – 49849916 – 161024 @ 22h49
+sys – dr-xr-xr-x root : root – 0 – 161024 @ 23h11
+media – drwxr-xr-x root : root – 4096 – 161024 @ 23h10
+etc – drwxr-xr-x root : root – 12288 – 171024 @ 08h48
+dev – drwxr-xr-x root : root – 3380 – 161024 @ 23h11
+vmlinuz – -rw-r--r-- root : root – 8185792 – 300924 @ 21h08
+initrd.img – -rw-r--r-- root : root – 49982845 – 161024 @ 22h50
+root – drwx------ root : root – 4096 – 161024 @ 23h06
+lib – drwxr-xr-x root : root – 4096 – 171024 @ 08h48
+home – drwxr-xr-x root : root – 4096 – 161024 @ 22h48
+sbin – drwxr-xr-x root : root – 12288 – 161024 @ 23h11
+.cache – drwx------ root : root – 4096 – 161024 @ 22h44
+tmp – drwxrwxrwx root : root – 4096 – 171024 @ 14h54
+usr – drwxr-xr-x root : root – 4096 – 161024 @ 22h30
+mnt – drwxr-xr-x root : root – 4096 – 161024 @ 22h30
+lost+found – drwx------ root : root – 16384 – 161024 @ 22h29
+run – drwxr-xr-x root : root – 660 – 161024 @ 23h12
+srv – drwxr-xr-x root : root – 4096 – 161024 @ 22h30
+bin – drwxr-xr-x root : root – 36864 – 171024 @ 08h48
+opt – drwxr-xr-x root : root – 4096 – 161024 @ 23h09
+var – drwxr-xr-x root : root – 4096 – 161024 @ 22h30
+lib64 – drwxr-xr-x root : root – 4096 – 161024 @ 22h33
+vmlinuz.old – -rw-r--r-- root : root – 8140672 – 091223 @ 16h48
+boot – drwxr-xr-x root : root – 4096 – 161024 @ 22h50
