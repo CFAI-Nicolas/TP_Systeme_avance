@@ -10,14 +10,12 @@ int main(int argc, char *argv[]) {
         return EXIT_FAILURE;
     }
 
-    // Ouvre le fichier en lecture
     int fd = open(argv[1], O_RDONLY);
     if (fd == -1) {
         perror("Erreur d'ouverture");
         return EXIT_FAILURE;
     }
 
-    // Récupère la taille du fichier
     off_t taille = lseek(fd, 0, SEEK_END);
     if (taille == -1) {
         perror("Erreur lseek");
