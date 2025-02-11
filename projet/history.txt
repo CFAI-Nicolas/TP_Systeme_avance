@@ -1,0 +1,24 @@
+ls
+pwd
+echo "Hello, Shell!"
+history
+exit
+history
+history.txt
+history
+exit
+export NAME=Jhon
+exho $NAME
+echo $NAME
+NAME=Jhon
+exit
+export NAME=Jhon
+echo $NAME
+exit
+alias ll="ls -al"
+exit
+exit
+alias ll="ls -al"
+exit
+exit
+exit
