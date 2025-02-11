@@ -22,7 +22,7 @@ void cree_fils() {
 
     printf("Fils : PID = %d, Pere = %d\n", pid, pid_pere);
 
-    int code_reteur = pid % 10; // Code de reteur basé sur le derniere chiffre du PID
+    int code_reteur = pid % 10;
     exit(code_reteur);
 }
 
@@ -54,9 +54,9 @@ int main() {
     }
 
     if (pid_fils == 0) {
-        cree_fils(); // Appel pour le code du fils
+        cree_fils();
     } else {
-        atendre_fils(pid_fils); // Appel pour le code du pere
+        atendre_fils(pid_fils);
     }
 
     return EXIT_SUCCESS;
