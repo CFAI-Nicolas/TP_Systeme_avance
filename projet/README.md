@@ -1,65 +1,54 @@
-MiniShell
+## MiniShell
 
 MiniShell est un interpréteur de commandes minimaliste écrit en C, permettant d'exécuter des commandes Unix de base.
 
-🚀 Fonctionnalités
+### 🚀 Fonctionnalités
 
-📌 Exécution des commandes système (ls, pwd, whoami, etc.).
+- 📌 Exécution des commandes système (`ls`, `pwd`, `whoami`, etc.).
+- 📜 Historique des commandes (`history`).
+- 🏠 Commandes internes (`cd`, `pwd`, `exit`).
+- 🛠 Mode batch (`./my_shell -c "commande"`).
+- ✅ Gestion des opérateurs (`;`, `&&`, `||`).
 
-💜 Historique des commandes (history).
+### 👥 Installation
 
-🏠 Commandes internes (cd, pwd, exit).
+#### 1️⃣ Compiler le projet
 
-🛠 Mode batch (./my_shell -c "commande").
+Assurez-vous d'avoir GCC installé, puis utilisez `make` :
 
-✅ Gestion des opérateurs (;, &&, ||).
-
-👥 Installation
-
-1️⃣ Compiler le projet
-
-Assurez-vous d'avoir GCC installé, puis utilisez make :
-
+```bash
 make
+```
 
-2️⃣ Lancer le shell interactif
+#### 2️⃣ Lancer le shell interactif
 
+```bash
 ./my_shell
+```
 
-3️⃣ Exécuter une commande en mode batch
+#### 3️⃣ Exécuter une commande en mode batch
 
+```bash
 ./my_shell -c "ls -l"
+```
 
-📌 Commandes internes
+### 📌 Commandes internes
 
-Commande
+| Commande     | Description                     |
+|--------------|---------------------------------|
+| `cd <dir>`   | Change le répertoire actuel     |
+| `pwd`        | Affiche le répertoire courant   |
+| `exit`       | Quitte le shell                 |
+| `history`    | Affiche l'historique des commandes |
 
-Description
+### 🛠 Dépendances
 
-cd <dir>
+- **GCC** pour la compilation (`sudo apt install gcc`).
+- **Make** pour automatiser la compilation (`sudo apt install make`).
 
-Change le répertoire actuel
+### 📌 Structure du projet
 
-pwd
-
-Affiche le répertoire courant
-
-exit
-
-Quitte le shell
-
-history
-
-Affiche l'historique des commandes
-
-🛠 Dépendances
-
-GCC pour la compilation (sudo apt install gcc).
-
-Make pour automatiser la compilation (sudo apt install make).
-
-📌 Structure du projet
-
+```
 ├── minishell/
 │   ├── main.c          # Fichier principal du shell
 │   ├── functions.h     # Déclarations des fonctions
@@ -68,14 +57,17 @@ Make pour automatiser la compilation (sudo apt install make).
 │   ├── Makefile        # Fichier pour compiler le projet
 │   ├── README.md       # Documentation
 │   ├── history.txt     # Historique des commandes
+```
 
-🔧 Nettoyer et recompiler le projet
+### 🔧 Nettoyer et recompiler le projet
 
+Pour nettoyer les fichiers compilés et recompiler :
+
+```bash
 make clean
 make
+```
 
-📌 Auteur
+### 📌 Auteur
 
 Maxime
-
-
