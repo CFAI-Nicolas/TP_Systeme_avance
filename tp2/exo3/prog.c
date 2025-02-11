@@ -6,7 +6,6 @@
 #include <string.h>
 #include <errno.h>
 
-// Fonction pour afficher un message d'erreur et quitter
 void erreur_fatale(const char *msg) {
     perror(msg);
     exit(EXIT_FAILURE);
@@ -17,7 +16,6 @@ int main(void) {
     pid_t pid1, pid2;
     int status_grep = 0;
 
-    // Création du pipe
     if (pipe(tube) == -1) {
         erreur_fatale("Erreur lors de la création du pipe");
     }
@@ -28,20 +26,17 @@ int main(void) {
         erreur_fatale("Erreur lors du fork pour ps eaux");
     }
     if (pid1 == 0) {
-        // Processus fils #1 (ps)
 
-        // Ferme l'extrémité de lecture du pipe
         close(tube[0]);
 
         // Redirige la sortie standard (STDOUT) vers l'extrémité d'écriture du pipe
         if (dup2(tube[1], STDOUT_FILENO) == -1) {
             erreur_fatale("Erreur lors de la redirection de STDOUT pour ps");
         }
-        close(tube[1]); // On peut fermer le descripteur car dup2 l'a dupliqué
+        close(tube[1]);
 
         // Exécute ps eaux
         execlp("ps", "ps", "eaux", NULL);
-        // Si execlp échoue :
         erreur_fatale("Erreur lors de l'exécution de ps eaux");
     }
 
@@ -51,9 +46,7 @@ int main(void) {
         erreur_fatale("Erreur lors du fork pour grep");
     }
     if (pid2 == 0) {
-        // Processus fils #2 (grep)
 
-        // Ferme l'extrémité d'écriture du pipe
         close(tube[1]);
 
         // Redirige l'entrée standard (STDIN) vers l'extrémité de lecture du pipe
@@ -72,9 +65,7 @@ int main(void) {
         }
         close(devnull_fd);
 
-        // Exécute grep "^root "
         execlp("grep", "grep", "^root ", NULL);
-        // Si execlp échoue
         erreur_fatale("Erreur lors de l'exécution de grep");
     }
 
@@ -83,19 +74,15 @@ int main(void) {
     close(tube[0]);
     close(tube[1]);
 
-    // Attend la terminaison de ps
-    wait(NULL);  // On ne vérifie pas spécialement le code de sortie de ps
+    wait(NULL); 
 
-    // Attend la terminaison de grep et récupère son code de sortie
     int status;
     waitpid(pid2, &status, 0);
     if (WIFEXITED(status)) {
         status_grep = WEXITSTATUS(status);
     }
 
-    // Si grep a un code de sortie 0, on affiche "root est connecté"
     if (status_grep == 0) {
-        // Utilisation de write sur la sortie standard
         const char *msg = "root est connecté\n";
         write(STDOUT_FILENO, msg, strlen(msg));
     }
