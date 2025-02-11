@@ -6,12 +6,9 @@
 
 #define SIZE (int)1e7
 static int tab[SIZE];
-
-// Variables globales de résultat
 static int globalMin;
 static int globalMax;
 
-// Mutex global pour protéger min/max
 pthread_mutex_t lock_minmax = PTHREAD_MUTEX_INITIALIZER;
 
 double get_time() {
@@ -36,7 +33,6 @@ void* thread_func(void* arg) {
         if (tab[i] > localMax) localMax = tab[i];
     }
 
-    // Mise à jour du min/max global AVEC protection
     pthread_mutex_lock(&lock_minmax);
     if (localMin < globalMin) globalMin = localMin;
     if (localMax > globalMax) globalMax = localMax;
@@ -63,7 +59,6 @@ int main(int argc, char* argv[]) {
         tab[i] = rand() % 1000000;
     }
 
-    // Initialisation du min/max global
     globalMin = tab[0];
     globalMax = tab[0];
 
