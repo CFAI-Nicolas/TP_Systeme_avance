@@ -4,7 +4,7 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include <fcntl.h>  // Pour open(), O_APPEND, O_WRONLY
+#include <fcntl.h>
 
 #include "functions.h"
 
@@ -13,7 +13,7 @@ void display_prompt() {
     printf("my_shell> ");
 }
 
-// Implémentation de handle_builtin_commands
+// Implémentation des commandes internes de linux
 int handle_builtin_commands(char *args[]) {
     if (strcmp(args[0], "exit") == 0) {
         printf("Exiting my_shell...\n");
@@ -26,7 +26,7 @@ int handle_builtin_commands(char *args[]) {
                 perror("cd failed");
             }
         }
-        return 1;  // Indique qu'une commande interne a été exécutée
+        return 1;
     } else if (strcmp(args[0], "pwd") == 0) {
         char cwd[1024];
         if (getcwd(cwd, sizeof(cwd)) != NULL) {
@@ -36,7 +36,7 @@ int handle_builtin_commands(char *args[]) {
         }
         return 1;
     }
-    return 0;  // Indique que ce n'était pas une commande interne
+    return 0;
 }
 
 // Fonction pour ajouter une commande à l’historique
@@ -54,7 +54,7 @@ void save_to_history(const char *command) {
 // Gestion des redirections
 void handle_redirection(char **args) {
     for (int i = 0; args[i] != NULL; i++) {
-        if (strcmp(args[i], ">") == 0) {  // Redirection sortie (écraser)
+        if (strcmp(args[i], ">") == 0) {
             int fd = open(args[i + 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
             if (fd == -1) {
                 perror("Failed to open file for output redirection");
@@ -62,8 +62,8 @@ void handle_redirection(char **args) {
             }
             dup2(fd, STDOUT_FILENO);
             close(fd);
-            args[i] = NULL;  // Terminer les arguments ici
-        } else if (strcmp(args[i], ">>") == 0) {  // Redirection sortie (ajouter)
+            args[i] = NULL;
+        } else if (strcmp(args[i], ">>") == 0) {
             int fd = open(args[i + 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
             if (fd == -1) {
                 perror("Failed to open file for append output redirection");
@@ -72,7 +72,7 @@ void handle_redirection(char **args) {
             dup2(fd, STDOUT_FILENO);
             close(fd);
             args[i] = NULL;
-        } else if (strcmp(args[i], "<") == 0) {  // Redirection entrée
+        } else if (strcmp(args[i], "<") == 0) {
             int fd = open(args[i + 1], O_RDONLY);
             if (fd == -1) {
                 perror("Failed to open file for input redirection");
@@ -81,17 +81,17 @@ void handle_redirection(char **args) {
             dup2(fd, STDIN_FILENO);
             close(fd);
             args[i] = NULL;
-        } else if (strcmp(args[i], "<<") == 0) {  // Heredoc
+        } else if (strcmp(args[i], "<<") == 0) {
     char buffer[1024];
     int fd[2];
     pipe(fd);
 
-    if (fork() == 0) {  // Processus enfant pour lire l'entrée
+    if (fork() == 0) {
         close(fd[0]);
         printf("heredoc> ");
         while (fgets(buffer, sizeof(buffer), stdin)) {
             if (strncmp(buffer, args[i + 1], strlen(args[i + 1])) == 0) {
-                break;  // Arrêter si le "terminateur" est rencontré
+                break; 
             }
             write(fd[1], buffer, strlen(buffer));
             printf("heredoc> ");
@@ -101,7 +101,7 @@ void handle_redirection(char **args) {
     }
 
     close(fd[1]);
-    dup2(fd[0], STDIN_FILENO);  // Rediriger l'entrée
+    dup2(fd[0], STDIN_FILENO);
     close(fd[0]);
     args[i] = NULL;
 }
@@ -109,7 +109,7 @@ void handle_redirection(char **args) {
     }
 }
 
-// Exécution d'une commande avec gestion des pipes
+// Pour commande avec des pipes
 int handle_pipes(char *cmd) {
     char *commands[MAX_ARG_SIZE];
     int pipefd[2], input_fd = 0;
@@ -152,7 +152,7 @@ int handle_pipes(char *cmd) {
             execvp(args[0], args);
             perror("Command not found");
             exit(EXIT_FAILURE);
-        } else {  // Processus parent
+        } else {
             waitpid(pid, NULL, 0);
             close(pipefd[1]);
             input_fd = pipefd[0];
