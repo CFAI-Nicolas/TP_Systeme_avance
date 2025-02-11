@@ -11,9 +11,9 @@ void creer_fils(char *argv[]) {
     if (pid < 0) {
         perror("Erreur lors de la création du fils");
         exit(EXIT_FAILURE);
-    } else if (pid == 0) { // Processus fils
+    } else if (pid == 0) {
         printf("Fils : PID = %d, Père = %d\n", getpid(), getppid());
-        close(STDOUT_FILENO); // Ferme STDOUT
+        close(STDOUT_FILENO);
         
         // Création du répertoire relatif s'il n'existe pas
         const char *dossier = "./logs/";
@@ -33,7 +33,7 @@ void creer_fils(char *argv[]) {
         // Nom du fichier temporaire à créer dans le répertoire logs
         char fichier_temp[50];
         snprintf(fichier_temp, sizeof(fichier_temp), "%sproc-exerciseXXXXXX", dossier);
-        int fd = mkstemp(fichier_temp); // Crée un fichier temporaire
+        int fd = mkstemp(fichier_temp);
         
         if (fd == -1) {
             perror("Erreur lors de la création du fichier temporaire");
@@ -45,18 +45,16 @@ void creer_fils(char *argv[]) {
         
         // Redirige STDOUT vers le fichier temporaire
         dup2(fd, STDOUT_FILENO);
-        close(fd); // Ferme le descripteur original
+        close(fd);
 
-        // Exécute le programme passé en paramètre
         execvp(argv[1], &argv[1]);
         
-        // Si exec échoue
         perror("Erreur lors de l'exécution de exec");
         exit(EXIT_FAILURE);
-    } else { // Processus père
+    } else { 
         int statut;
         printf("Père : PID du fils = %d\n", pid);
-        waitpid(pid, &statut, 0); // Attend la fin du fils
+        waitpid(pid, &statut, 0);
         printf("Le fils s'est arrêté avec le code : %d\n", WEXITSTATUS(statut));
         printf("C'est tout, les amis !\n");
     }
